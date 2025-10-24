@@ -12,6 +12,6 @@ public class DaoFabrica
         }
         public static LugarDao criaLugar()
         {
-        	    return new LugarDaoJdbc();
+        	    return new LugarDaoJdbc(Db.conecta());
         }
 }

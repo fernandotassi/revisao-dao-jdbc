@@ -10,7 +10,7 @@ public class Program
 	public static void main(String[] args) 
 	{
 	         Setor set = new Setor(1, "pre-moldados");
-	         Arigo ari = new Arigo(1, "tioxico", "tioxico@gmail.com", new Date(),  3000.);
+	         Arigo ari = new Arigo(1, "tioxico", "tioxico@gmail.com", new Date(),  3000., set);
 	         
 	         System.out.println(set);
 	         System.out.println(ari);

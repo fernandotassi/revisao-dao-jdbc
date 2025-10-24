@@ -52,15 +52,11 @@ public class CachorrasDaoJdbc implements CachorrasDao
 			  rs = st.executeQuery();
 			  if(rs.next())
 			  {
-				    Lugar lu = new Lugar();
+				    Lugar lu = instanciaLugar(rs);
 				    lu.setId(rs.getInt("id_lugar"));
 				    lu.setNome(rs.getString("nome"));
 				    
-				    Cachorras cach = new Cachorras();
-				    cach.setId(rs.getInt("id"));
-				    cach.setNome(rs.getString("nome"));
-				    cach.setRaca(rs.getString("raca"));
-				    cach.setLugar(lu);
+				    Cachorras cach = instanciaCachorras(rs, lu);				
 				    return cach;
 			   }
 			  return null;
@@ -80,5 +76,24 @@ public class CachorrasDaoJdbc implements CachorrasDao
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+    
+	private Lugar instanciaLugar(ResultSet rs)
+	{
+		 try
+		 {
+				  Lugar lu = new Lugar(rs.getInt("id"), rs.getString("nome"));
+				  return lu;
+		 }
+		 catch(SQLException e){throw new DbException(e.getMessage());}
+	}
+	
+	private Cachorras instanciaCachorras(ResultSet rs, Lugar la)
+	{
+		   try
+		   {
+					   Cachorras cac = new Cachorras(rs.getInt("id"), rs.getString("nome"), rs.getString("raca"), la);
+					   return cac;
+		   }
+		   catch(SQLException e){throw new DbException(e.getMessage());}
+	}
 }

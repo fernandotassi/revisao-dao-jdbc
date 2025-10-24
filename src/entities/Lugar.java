@@ -3,15 +3,15 @@ package entities;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Setor implements Serializable
+public class Lugar implements Serializable
 {
           private static final long serialVersionUID = 1L;
           
           private Integer id;
           private String nome;
           
-          public Setor(){}
-          public Setor(Integer id, String nome){this.id = id; this.nome = nome;}
+          public Lugar(){}
+          public Lugar(Integer id, String nome){this.id = id; this.nome = nome;}
           
           public void setId(Integer id){this.id = id;}
           public void setNome(String nome){this.nome = nome;}
@@ -33,11 +33,11 @@ public class Setor implements Serializable
 					return false;
 				if (getClass() != obj.getClass())
 					return false;
-				Setor other = (Setor) obj;
+				Lugar other = (Lugar) obj;
 				return Objects.equals(id, other.id);
 		  }
           
 		  @Override
           public String toString()
-          {return id + ", " + nome + " finito";}
+          {return id + ", " + nome + " -finito";}
 }

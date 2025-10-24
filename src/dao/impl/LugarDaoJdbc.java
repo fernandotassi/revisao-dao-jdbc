@@ -2,20 +2,21 @@ package dao.impl;
 
 import java.util.List;
 
-import dao.SetorDao;
-import entities.Setor;
+import dao.LugarDao;
+import entities.Lugar;
 
-public class SetorDaoJdbc implements SetorDao
+public class LugarDaoJdbc implements LugarDao
 {
+	
 	@Override
-	public void inseri(Setor set) 
+	public void inseri(Lugar lug) 
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void atualiza(Setor set) 
+	public void atualiza(Lugar lug) 
 	{
 		// TODO Auto-generated method stub
 		
@@ -29,14 +30,14 @@ public class SetorDaoJdbc implements SetorDao
 	}
 
 	@Override
-	public Setor find(Integer id) 
+	public Lugar find(Integer id) 
 	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Setor> findall() 
+	public List<Lugar> findall() 
 	{
 		// TODO Auto-generated method stub
 		return null;

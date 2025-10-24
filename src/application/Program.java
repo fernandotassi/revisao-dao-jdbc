@@ -2,18 +2,26 @@ package application;
 
 import java.util.Date;
 
-import entities.Arigo;
-import entities.Setor;
+import dao.CachorrasDao;
+import dao.DaoFabrica;
+import dao.LugarDao;
+import entities.Cachorras;
+import entities.Lugar;
 
 public class Program 
 {
 	public static void main(String[] args) 
 	{
-	         Setor set = new Setor(1, "pre-moldados");
-	         Arigo ari = new Arigo(1, "tioxico", "tioxico@gmail.com", new Date(),  3000., set);
+	         Lugar lug = new Lugar(1, "apart");
+	         Cachorras ari = new Cachorras(1, "perola", "generica", lug);
 	         
-	         System.out.println(set);
+	         System.out.println(lug);
 	         System.out.println(ari);
+	         
+	         CachorrasDao ara = DaoFabrica.criaCachorraDao();
+	         Cachorras ca = ara.find(5);
+	         System.out.println(ca);
+	         LugarDao sat = DaoFabrica.criaLugar();
 	}
 
 }

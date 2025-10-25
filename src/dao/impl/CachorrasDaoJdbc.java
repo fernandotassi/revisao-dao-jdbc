@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import dao.CachorrasDao;
 import db.Db;
@@ -53,9 +56,7 @@ public class CachorrasDaoJdbc implements CachorrasDao
 			  if(rs.next())
 			  {
 				    Lugar lu = instanciaLugar(rs);
-				    lu.setId(rs.getInt("id_lugar"));
-				    lu.setNome(rs.getString("nome"));
-				    
+				  
 				    Cachorras cach = instanciaCachorras(rs, lu);				
 				    return cach;
 			   }
@@ -76,12 +77,48 @@ public class CachorrasDaoJdbc implements CachorrasDao
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public List<Cachorras> findlug(Lugar liu) 
+	{
+		  PreparedStatement st = null;
+		  ResultSet rs = null;
+		  try
+		  {
+			     List<Cachorras> lista = new ArrayList<>(); 
+			     Map<Integer, Lugar> map = new HashMap<>();
+			     st = conn.prepareStatement("select cachorras.*, lugar.* from cachorras inner join lugar on cachorras.id_lugar = lugar.id "
+			     		                                                       + "where cachorras.id_lugar = ? order by cachorras.nome");		    	
+			     st.setInt(1, liu.getId());			    
+			     rs = st.executeQuery(); 
+			     while(rs.next())
+			     {
+			    	    Lugar la = map.get(rs.getInt("id_lugar"));
+			    	    if(la == null)
+			    	    {	
+			    	           la= instanciaLugar(rs);
+			    	           map.put(rs.getInt("id_lugar"), la);
+			    	    }      
+			    	    Cachorras cac = instanciaCachorras(rs, la);
+			    	    lista.add(cac);
+			    	  
+			     }	 
+			     return lista;
+		  }
+		  catch(SQLException e){throw new DbException(e.getMessage());}
+		  finally
+		  {
+			      Db.fechars(rs);
+			      Db.fechast(st);
+		  }
+		 
+	  }
     
 	private Lugar instanciaLugar(ResultSet rs)
 	{
 		 try
 		 {
-				  Lugar lu = new Lugar(rs.getInt("id"), rs.getString("nome"));
+				  Lugar lu = new Lugar(rs.getInt("lugar.id"), rs.getString("lugar.nome"));
 				  return lu;
 		 }
 		 catch(SQLException e){throw new DbException(e.getMessage());}
@@ -96,4 +133,5 @@ public class CachorrasDaoJdbc implements CachorrasDao
 		   }
 		   catch(SQLException e){throw new DbException(e.getMessage());}
 	}
+
 }

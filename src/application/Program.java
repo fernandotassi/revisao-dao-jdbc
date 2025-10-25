@@ -1,6 +1,6 @@
 package application;
 
-import java.util.Date;
+import java.util.List;
 
 import dao.CachorrasDao;
 import dao.DaoFabrica;
@@ -19,11 +19,15 @@ public class Program
 	         //ystem.out.println(ari);
 	         
 	         CachorrasDao ara = DaoFabrica.criaCachorraDao();
-	         Cachorras ca = ara.find(5);
-	         System.out.println(ca);
+	         //Cachorras ca = ara.find(3);
+	        // System.out.println(ca + "---");
 	         LugarDao sat = DaoFabrica.criaLugar();
-	         Lugar lai = sat.find(4);
-	         System.out.println(lai);
+	         Lugar lai = sat.find(2);
+	         //System.out.println(lai);
+	         Lugar lala = new Lugar(3, null);
+	         List<Cachorras> lista  = ara.findlug(lala);
+	         for(Cachorras c: lista)
+	                System.out.println(c);
 	}
 
 }

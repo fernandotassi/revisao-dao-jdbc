@@ -22,7 +22,7 @@ public class Program
 	         //Cachorras ca = ara.find(3);
 	        // System.out.println(ca + "---");
 	         LugarDao sat = DaoFabrica.criaLugar();
-	         Lugar lai = sat.find(2);
+	         //Lugar lai = sat.find(2);
 	         //System.out.println(lai);
 //	         Lugar lala = new Lugar(3, null);
 //	         List<Cachorras> lista  = ara.findlug(lala);
@@ -30,9 +30,24 @@ public class Program
 //	                System.out.println(c);
 	         
 	       
-	         List<Cachorras> liste  = ara.findall();
-	         for(Cachorras c: liste)
-	                System.out.println(c);
+//	         List<Cachorras> liste  = ara.findall();
+//	         for(Cachorras c: liste)
+//	                System.out.println(c);
+		     
+    	    Lugar la = new Lugar();
+//		    la.setNome("apart"); 
+//		    sat.inseri(la);
+//		    System.out.println("inserido - " + la.getId());
+	         
+    	    Lugar lua = new Lugar(10, null);
+    	    
+    	    		
+	         Cachorras cac = new Cachorras();
+	         cac.setNome("perola");
+	         cac.setRaca("generica");
+	         cac.setLugar(lua);
+	         ara.inseri(cac);
+		     System.out.println("inserido - " + cac.getId());
 	}
 
 }

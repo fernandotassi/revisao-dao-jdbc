@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import dao.LugarDao;
@@ -19,8 +20,26 @@ public class LugarDaoJdbc implements LugarDao
 	@Override
 	public void inseri(Lugar lug) 
 	{
-		// TODO Auto-generated method stub
-		
+	        PreparedStatement st = null;
+	        try
+	        {
+	        		st = conn.prepareStatement("insert into lugar(nome) values(?)", Statement.RETURN_GENERATED_KEYS);
+	        		st.setString(1, lug.getNome());
+	        		int rows = st.executeUpdate();
+	        		if(rows > 0)
+	        		{
+	        			ResultSet rs = st.getGeneratedKeys();
+	        			if(rs.next())
+	        			{
+	        				   int id = rs.getInt(1);
+	        				   lug.setId(id);
+	        			}	
+	        		}	
+	        		else
+	        			    throw new DbException("erro, nada inserido");
+	        }
+	        catch(SQLException e){throw new DbException(e.getMessage());}
+	        finally{Db.fechast(st); Db.fechars(null);}
 	}
 
 	@Override

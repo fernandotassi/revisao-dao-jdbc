@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,8 +25,30 @@ public class CachorrasDaoJdbc implements CachorrasDao
 	@Override
 	public void inseri(Cachorras cac)
 	{
-		// TODO Auto-generated method stub
-		
+		    PreparedStatement st = null;
+		    ResultSet rs = null;
+		    int id;
+		    try
+		    {
+		    	    st = conn.prepareStatement("insert into cachorras(nome, raca, id_lugar) values(?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+		    	    st.setString(1, cac.getNome());
+		    	    st.setString(2, cac.getRaca());
+		    	    st.setInt(3, cac.getLugar().getId());
+		    	    int rows = st.executeUpdate();			    	   
+					if(rows > 0)
+					{	
+					        rs = st.getGeneratedKeys();
+					        if(rs.next())
+					        {	
+					        	id  = rs.getInt(1);
+					        	cac.setId(id);
+					        }	
+					}       
+					else
+						     throw new DbException("erro, nada inserido");
+		    }
+		    catch(SQLException e){throw new DbException(e.getMessage());}
+		    finally{ Db.fechast(st); Db.fechars(rs);}
 	}
 
 	@Override

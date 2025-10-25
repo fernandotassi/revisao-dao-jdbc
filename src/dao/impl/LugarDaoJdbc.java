@@ -45,8 +45,27 @@ public class LugarDaoJdbc implements LugarDao
 	@Override
 	public void atualiza(Lugar lug) 
 	{
-		// TODO Auto-generated method stub
-		
+		   PreparedStatement st = null;
+		   try
+		   {
+			      st = conn.prepareStatement("update lugar set nome = ? where id = ?", Statement.RETURN_GENERATED_KEYS);
+			      st.setString(1, lug.getNome());
+			      st.setInt(2, lug.getId());
+			      int rows = st.executeUpdate();
+			      if(rows > 0)
+			      {
+			    	      ResultSet rs = st.getGeneratedKeys();
+			    	      if(rs.next())
+			    	      {
+			    	    	       int id = rs.getInt(1);
+			    	    	       lug.setId(id);
+			    	      }	  
+			      }	 
+			      else
+			    	      throw new DbException("erro, nada atualizado");
+		   }
+		   catch(SQLException e){throw new DbException(e.getMessage());}
+		   finally {Db.fechars(null); Db.fechast(st);}
 	}
 
 	@Override

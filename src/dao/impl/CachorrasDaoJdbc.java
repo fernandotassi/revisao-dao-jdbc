@@ -54,15 +54,31 @@ public class CachorrasDaoJdbc implements CachorrasDao
 	@Override
 	public void atualiza(Cachorras cac)
 	{
-		// TODO Auto-generated method stub
-		
+		    PreparedStatement st = null;		
+		    try
+		    {
+		    	    st = conn.prepareStatement("update cachorras set raca = ? where id = ?", Statement.RETURN_GENERATED_KEYS);
+		    	    st.setString(1, cac.getRaca());
+		    	    st.setInt(2, cac.getId());
+		    	    st.executeUpdate();		    	  
+		    }
+		    catch(SQLException e){throw new DbException(e.getMessage());}
+		    finally {Db.fechast(st);}
 	}
 
 	@Override
 	public void deleta(Integer id)
-	{
-		// TODO Auto-generated method stub
-		
+	{	
+		     PreparedStatement st = null;
+		     Cachorras cac = null;
+		     try
+		     {
+		    	     st = conn.prepareStatement("delete from cachorras where id = ?", Statement.RETURN_GENERATED_KEYS);
+		    	     st.setInt(1, id);
+		    	     st.executeUpdate();		    	     
+		     }
+		     catch(SQLException e){throw new DbException(e.getMessage());}
+		     finally{Db.fechast(st);}
 	}
 
 	@Override

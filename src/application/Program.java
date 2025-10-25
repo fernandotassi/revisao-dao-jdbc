@@ -24,9 +24,14 @@ public class Program
 	         LugarDao sat = DaoFabrica.criaLugar();
 	         Lugar lai = sat.find(2);
 	         //System.out.println(lai);
-	         Lugar lala = new Lugar(3, null);
-	         List<Cachorras> lista  = ara.findlug(lala);
-	         for(Cachorras c: lista)
+//	         Lugar lala = new Lugar(3, null);
+//	         List<Cachorras> lista  = ara.findlug(lala);
+//	         for(Cachorras c: lista)
+//	                System.out.println(c);
+	         
+	       
+	         List<Cachorras> liste  = ara.findall();
+	         for(Cachorras c: liste)
 	                System.out.println(c);
 	}
 

@@ -67,15 +67,40 @@ public class CachorrasDaoJdbc implements CachorrasDao
 		   {
 			      Db.fechars(rs);
 			      Db.fechast(st);
-		   }
-		
+		   }	
      	}
 
 	@Override
 	public List<Cachorras> findall()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		  PreparedStatement st = null;
+		  ResultSet rs = null;
+		  List<Cachorras> lista = new ArrayList<>();
+		  Map<Integer, Lugar> map = new HashMap<>();
+		  try 
+		  {
+				  st = conn.prepareStatement("select cachorras.*, lugar.* from cachorras inner join lugar "
+				  		                                                           + "on cachorras.id_lugar = lugar.id order by cachorras.nome");
+				  rs = st.executeQuery();	
+		          while(rs.next())
+		          {	  
+		        	          Lugar la = map.get(rs.getInt("id_lugar"));
+		        	          if(la == null)
+		        	          {	  
+								       la = instanciaLugar(rs);
+				        	           map.put(rs.getInt("id_lugar"), la);
+		        	          }
+						      Cachorras cac = instanciaCachorras(rs, la);
+						      lista.add(cac);
+		          }
+		  }
+		 catch(SQLException e){throw new DbException(e.getMessage());}
+		  finally
+		  {
+			     Db.fechars(rs);
+			     Db.fechast(st);
+		  }
+		  return lista;
 	}
 	
 	@Override
@@ -100,8 +125,7 @@ public class CachorrasDaoJdbc implements CachorrasDao
 			    	           map.put(rs.getInt("id_lugar"), la);
 			    	    }      
 			    	    Cachorras cac = instanciaCachorras(rs, la);
-			    	    lista.add(cac);
-			    	  
+			    	    lista.add(cac);			    	  
 			     }	 
 			     return lista;
 		  }
@@ -110,8 +134,7 @@ public class CachorrasDaoJdbc implements CachorrasDao
 		  {
 			      Db.fechars(rs);
 			      Db.fechast(st);
-		  }
-		 
+		  }		 
 	  }
     
 	private Lugar instanciaLugar(ResultSet rs)
